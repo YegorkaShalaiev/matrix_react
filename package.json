@@ -4,7 +4,9 @@
   "description": "",
   "main": "index.html",
   "scripts": {
-    "dev": "vite"
+    "dev": "vite",
+    "lintfix": "eslint . --fix",
+    "prepare": "husky"
   },
   "author": "",
   "license": "ISC",
@@ -14,9 +16,15 @@
     "vite": "^5.2.10"
   },
   "devDependencies": {
+    "@eslint/js": "^9.1.1",
     "@types/react": "^18.3.1",
     "@types/react-dom": "^18.3.0",
+    "eslint": "^8.57.0",
+    "eslint-plugin-react": "^7.34.1",
+    "globals": "^15.1.0",
+    "husky": "^9.0.11",
     "sass": "^1.76.0",
-    "typescript": "^5.4.5"
+    "typescript": "^5.4.5",
+    "typescript-eslint": "^7.8.0"
   }
 }
