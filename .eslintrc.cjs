@@ -13,6 +13,7 @@ module.exports = {
 		semi: ['error', 'never'],
 		indent: ['error', 'tab'],
 		'comma-dangle': ['error', 'always-multiline'],
+		'object-curly-spacing': ['error', 'always'],
 	},
 	settings: {
 		react: {

@@ -1,13 +1,21 @@
 import React from 'react'
-import getRandomChar from '@/utils/getRandomChar'
-import { GRID_CELL_WIDTH, GRID_CELL_HEIGHT } from '@/constants/grid'
+import { GRID_CELL_WIDTH, GRID_CELL_HEIGHT } from '@/constants'
 import '@/styles/app.scss'
 
-const Cell: React.FC = () => {
+interface IProps {
+	char: string
+	isActive: boolean
+	isBlank: boolean
+}
+
+const Cell: React.FC<IProps> = ( { char, isActive, isBlank } ) => {
 	return (
-		<div className="cell" style={{ width: GRID_CELL_WIDTH, height: GRID_CELL_HEIGHT }}>
+		<div
+			className={`cell ${isActive ? 'active' : ''} ${isBlank ? 'blank' : ''}`}
+			style={{ width: GRID_CELL_WIDTH, height: GRID_CELL_HEIGHT }}
+		>
 			<span>
-				{ getRandomChar() }
+				{ char }
 			</span>
 		</div>
 	)

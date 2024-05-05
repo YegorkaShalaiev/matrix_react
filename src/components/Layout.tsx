@@ -1,23 +1,19 @@
 import React from 'react'
-
-import Column from './Column'
-
-import useGrid from '../hooks/useGrid'
-
-import '../styles/app.scss'
-
+import Column from '@/components/Column'
+import useWindow from '@/hooks/useWindow'
+import '@/styles/app.scss'
 
 const Layout: React.FC = () => {
-	const { cols } = useGrid()
+	const { cols } : { cols: number } = useWindow()
 
 	return (
 		<div className="layout">
 			{
 				Array
-					.from({ length: cols })
-					.map((_, index) => (
+					.from( { length: cols } )
+					.map( ( _, index ) => (
 						<Column key={index}/>
-					))
+					) )
 			}
 		</div>
 	)

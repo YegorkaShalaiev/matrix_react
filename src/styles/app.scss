@@ -28,4 +28,12 @@ body {
 .cell {
   box-sizing: border-box;
   color: green;
+
+  &.active {
+    color: #fff;
+  }
+
+  &.blank {
+    color: transparent;
+  }
 }
