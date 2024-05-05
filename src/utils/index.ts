@@ -1,5 +1,3 @@
-import { MATRIX_SPEED_MS } from '@/constants'
-
 export const getRandomChar = (): string => {
 	const lowercaseLatin = 'abcdefghijklmnopqrstuvwxyz'
 	const uppercaseLatin = lowercaseLatin.toUpperCase()
@@ -14,13 +12,8 @@ export const getRandomChar = (): string => {
 	return allChars[randomIndex]
 }
 
-export const getColumnChars = ( rows: number ): string[] => {
-	return Array.from({ length: rows }, () => getRandomChar())
-}
+export const getRandomValueFromInterval = (min: number, max: number): number => {
+	const intervalLength = max - min + 1
 
-export const getRandomizedDelay = (): number => {
-	const minDelay = MATRIX_SPEED_MS * 10
-	const maxDelay = MATRIX_SPEED_MS * 100
-
-	return Math.floor(Math.random() * (maxDelay - minDelay + 1)) + minDelay
+	return Math.round(Math.random() * intervalLength + min)
 }

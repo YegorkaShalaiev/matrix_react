@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react'
 
 import { GRID_CELL_WIDTH, GRID_CELL_HEIGHT } from '@/constants'
 
-export default (): { cols: number, rows: number } => {
+export default (): IGridParams => {
 	const calculateColsAmount = (): number => Math.ceil( window.innerWidth / GRID_CELL_WIDTH )
 	const calculateRowsAmount = (): number => Math.ceil( window.innerHeight / GRID_CELL_HEIGHT )
 

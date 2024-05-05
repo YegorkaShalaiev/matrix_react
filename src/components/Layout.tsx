@@ -4,16 +4,16 @@ import useWindow from '@/hooks/useWindow'
 import '@/styles/app.scss'
 
 const Layout: React.FC = () => {
-	const { cols } : { cols: number } = useWindow()
+	const { cols } : Pick<IGridParams, 'cols'> = useWindow()
 
 	return (
 		<div className="layout">
 			{
 				Array
 					.from( { length: cols } )
-					.map( ( _, index ) => (
+					.map(( _, index ) => (
 						<Column key={index}/>
-					) )
+					))
 			}
 		</div>
 	)
