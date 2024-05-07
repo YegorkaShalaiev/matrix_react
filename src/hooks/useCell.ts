@@ -5,8 +5,8 @@ import { MATRIX_SPEED_MS } from '@/constants'
 
 export default (): ICellMethods => {
 	const { rows }: IGridParams = useWindow()
-	const minDropLength: number = Math.ceil(rows / 6)
-	const maxDropLength: number = Math.ceil(rows / 1.5)
+	const minDropLength: number = Math.ceil(rows / 8)
+	const maxDropLength: number = Math.ceil(rows / 2)
 	const [dropStart, setDropStart] = useState<number>(-1)
 	const [prevDropLength, setPrevDropLength] = useState<number>(0)
 	const [dropLength, setDropLength] = useState<number>(() => {
@@ -22,7 +22,7 @@ export default (): ICellMethods => {
 			const isPrevDropTailVisible = dropStart - prevDropLength < 0
 
 			return isPrevDropTailVisible
-				? isInDrop || index > rows - (prevDropLength - dropStart + 1)
+				? index > rows - (prevDropLength - dropStart + 1) || isInDrop
 				: isInDrop
 		}
 
