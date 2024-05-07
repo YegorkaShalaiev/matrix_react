@@ -4,7 +4,7 @@ import useWindow from '@/hooks/useWindow'
 import '@/styles/app.scss'
 
 const Layout: React.FC = () => {
-	const { cols } : Pick<IGridParams, 'cols'> = useWindow()
+	const { cols } : IGridParams = useWindow()
 
 	return (
 		<div className="layout">
