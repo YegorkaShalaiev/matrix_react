@@ -1,4 +1,4 @@
-import {useState, useEffect, useMemo, useRef} from 'react'
+import { useState, useEffect, useMemo } from 'react'
 import useWindow from '@/hooks/useWindow'
 import { getRandomValueFromInterval } from '@/utils'
 import { MATRIX_SPEED_MS } from '@/constants'
@@ -13,7 +13,6 @@ export default (): ICellMethods => {
 		return getRandomValueFromInterval(minDropLength, maxDropLength)
 	})
 
-	const dropStartRef = useRef<number>(dropStart)
 	const dropEnd = useMemo<number>(() => dropStart - dropLength, [dropStart, dropLength])
 
 	const isVisible = (index: number): boolean => {
@@ -33,19 +32,20 @@ export default (): ICellMethods => {
 	const isActive = (index: number): boolean => index === dropStart
 
 	useEffect(() => {
+		if (dropStart === rows - 1) {
+			setPrevDropLength(() => dropLength)
+			setDropLength(() => getRandomValueFromInterval(minDropLength, maxDropLength))
+		}
+	}, [dropStart])
+
+	useEffect(() => {
 		let intervalId: NodeJS.Timeout
 
 		const delay: number = getRandomValueFromInterval(MATRIX_SPEED_MS * 10, MATRIX_SPEED_MS * 500)
 		
 		setTimeout(() => {
 			intervalId = setInterval(() => {
-				dropStartRef.current = (dropStartRef.current + 1) % rows
-				setDropStart(() => dropStartRef.current)
-
-				if (dropStartRef.current === rows - 1) {
-					setPrevDropLength(() => dropLength)
-					setDropLength(() => getRandomValueFromInterval(minDropLength, maxDropLength))
-				}
+				setDropStart(prevValue => (prevValue + 1) % rows)
 			}, MATRIX_SPEED_MS)
 		}, delay)
 
