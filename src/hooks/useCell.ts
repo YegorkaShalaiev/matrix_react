@@ -4,7 +4,10 @@ import { getRandomValueFromInterval } from '@/utils'
 import { MATRIX_SPEED_MS } from '@/constants'
 
 export default (): ICellMethods => {
-	const { rows }: IGridParams = useWindow()
+	let intervalId: NodeJS.Timeout
+	let timeoutId: NodeJS.Timeout
+
+	const { rows, cols }: IGridParams = useWindow()
 	const minDropLength: number = Math.ceil(rows / 10)
 	const maxDropLength: number = Math.ceil(rows / 1.5)
 	const [dropStart, setDropStart] = useState<number>(-1)
@@ -33,6 +36,13 @@ export default (): ICellMethods => {
 
 	const isActive = (index: number): boolean => index === dropStart
 
+	const reset = () : void => {
+		setDropStart(-1)
+		setPrevDropLength(0)
+		clearInterval(intervalId)
+		clearTimeout(timeoutId)
+	}
+
 	useEffect(() => {
 		if (dropStart === rows - 1) {
 			setPrevDropLength(() => dropLength)
@@ -41,18 +51,16 @@ export default (): ICellMethods => {
 	}, [dropStart])
 
 	useEffect(() => {
-		let intervalId: NodeJS.Timeout
+		const delay: number = getRandomValueFromInterval(MATRIX_SPEED_MS * 5, MATRIX_SPEED_MS * 300)
 
-		const delay: number = getRandomValueFromInterval(MATRIX_SPEED_MS * 10, MATRIX_SPEED_MS * 500)
-		
-		setTimeout(() => {
+		timeoutId = setTimeout(() => {
 			intervalId = setInterval(() => {
 				setDropStart(prevValue => (prevValue + 1) % rows)
 			}, MATRIX_SPEED_MS)
 		}, delay)
 
-		return () => clearInterval(intervalId)
-	}, [])
+		return () => reset()
+	}, [cols, rows])
 
 	return {
 		isVisible,
