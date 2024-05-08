@@ -1,29 +1,31 @@
-import { useState, useEffect, useMemo } from 'react'
+import { useState, useEffect } from 'react'
 import useWindow from '@/hooks/useWindow'
 import { getRandomValueFromInterval } from '@/utils'
 import { MATRIX_SPEED_MS } from '@/constants'
 
 export default (): ICellMethods => {
 	const { rows }: IGridParams = useWindow()
-	const minDropLength: number = Math.ceil(rows / 8)
-	const maxDropLength: number = Math.ceil(rows / 2)
+	const minDropLength: number = Math.ceil(rows / 10)
+	const maxDropLength: number = Math.ceil(rows / 1.5)
 	const [dropStart, setDropStart] = useState<number>(-1)
 	const [prevDropLength, setPrevDropLength] = useState<number>(0)
 	const [dropLength, setDropLength] = useState<number>(() => {
 		return getRandomValueFromInterval(minDropLength, maxDropLength)
 	})
 
-	const dropEnd = useMemo<number>(() => dropStart - dropLength, [dropStart, dropLength])
-
 	const isVisible = (index: number): boolean => {
-		const isInDrop = index <= dropStart && index >= dropEnd
+		const isInDrop = index <= dropStart && index >= dropStart - dropLength
 
-		if (prevDropLength) {
-			const isPrevDropTailVisible = dropStart - prevDropLength < 0
+		if (!prevDropLength) { // at first loop
+			return isInDrop
+		}
 
-			return isPrevDropTailVisible
-				? index > rows - (prevDropLength - dropStart + 1) || isInDrop
-				: isInDrop
+		if (dropStart === rows - 1) {  // at last step of every loop
+			return index > rows - prevDropLength - 1
+		}
+
+		if (dropStart - prevDropLength < 0) { // at next loops (except first) when tail of prev drop is still visible
+			return index > rows - (prevDropLength - dropStart + 1) || isInDrop
 		}
 
 		return isInDrop
