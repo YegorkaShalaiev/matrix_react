@@ -4,7 +4,7 @@ import useWindow from '@/hooks/useWindow'
 import '@/styles/app.scss'
 
 const Layout: React.FC = () => {
-	const { cols } : IGridParams = useWindow()
+	const { cols, rows } : IGridParams = useWindow()
 
 	return (
 		<div className="layout">
@@ -12,7 +12,11 @@ const Layout: React.FC = () => {
 				Array
 					.from( { length: cols } )
 					.map(( _, index ) => (
-						<Column key={index}/>
+						<Column
+							key={index}
+							cols={cols}
+							rows={rows}
+						/>
 					))
 			}
 		</div>

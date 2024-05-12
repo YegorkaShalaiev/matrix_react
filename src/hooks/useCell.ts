@@ -1,13 +1,11 @@
 import { useState, useEffect } from 'react'
-import useWindow from '@/hooks/useWindow'
 import { getRandomValueFromInterval } from '@/utils'
 import { MATRIX_SPEED_MS } from '@/constants'
 
-export default (): ICellMethods => {
+export default ({ cols, rows }: IGridParams): ICellMethods => {
 	let intervalId: NodeJS.Timeout
 	let timeoutId: NodeJS.Timeout
 
-	const { rows, cols }: IGridParams = useWindow()
 	const minDropLength: number = Math.ceil(rows / 10)
 	const maxDropLength: number = Math.ceil(rows / 1.5)
 	const [dropStart, setDropStart] = useState<number>(-1)
